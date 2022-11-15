@@ -27,8 +27,52 @@ Design the interfaces of each of your classes and how they will work together
 to achieve the job of the program. You can use diagrams to visualise the
 relationships between classes.
 
-Consider pulling out the key verbs and nouns in the problem description to
-help you figure out which classes and methods to have.
+       ┌─────────────────────────────────────────────────────────────────────┐
+       │                                                                     │
+       │   CONTROLLER     - communicates selection from takeaway             │
+       │   ----------       to user order                                    │
+       │                                                                     │
+       │                                                                     ├────────────────┐
+       └─┬───────────────────────────────────────────────────────────────┬───┘                │
+         │                                                               │                    │
+         │                                                               │                    │
+         │         ┌───────────────────────────────────────────┐         │                    │
+         │         │                                           │         │                    │
+┌────────▼─────────┴───────────┐                               │         │                    │
+│                              │                         ┌─────▼─────────▼──────────┐         │
+│ TAKEAWAY                     │                         │                          │         │
+│ --------                     ├────┐                    │ INTERFACE                │         │
+│                              │    │                    │ ---------                │         │
+│   - select a menu            │    │contains zero       │ - get user input via     │         │
+│   - select item from menu    │    │  or more           │   numbered list in       │         │
+│     with quantity            │    │  menus             │   in terminal            │         │
+│                              │    │                    └────────▲─────────────────┘         │
+└──────────────────────────────┘    │                             │                           │
+                                    │                             │                           │
+   ┌───────────────────────────┐    │                             │                           │
+   │                           │    │                             │                           │
+   │ MENU                      │    │         ┌───────────────────┴─────────────┐             │
+   │ ----                      │◄───┘         │                                 │             │
+   │                           │              │ CUSTOMER'S ORDER                │             │
+   │  - list _meals in format  │              │ ----------------                │             │
+   │    that includes          │              │                                 │             │
+   │    name and cost          │              │   - add meals (with quantity)   │             │
+   │  - init with type         │              │   - list meals                  │             │
+   │    starter, etc           │              │     with cost for quantity      │◄────────────┘
+   └────────┬──────────────────┘              │     with total cost             │
+            │                                 │   - place order                 │
+            │                                 └─────┬───────────────────────────┘
+            │ contains zero or more                 │
+            │  meals                                │
+            │                                  contains zero or more
+            │                                   meals
+     ┌──────▼─────────────────┐                     │
+     │                        │                     │
+     │ MEAL                   ◄─────────────────────┘
+     │ ----                   │
+     │   - name               │
+     │   - price              │
+     └────────────────────────┘
 
 Steps 3, 4, and 5 then operate as a cycle.
 
