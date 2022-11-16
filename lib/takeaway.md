@@ -48,9 +48,9 @@ relationships between classes.
 │ TAKEAWAY                     │                         │                          │         │
 │ --------                     ├────┐                    │ INTERFACE                │         │
 │   - init with name of shop   │    │                    │ ---------                │         │
-│   - list menu types          │    │contains zero       │ - get user input via     │         │
-│   - list content of a menu   │    │  or more           │   numbered list in       │         │
-│                              │    │  menus             │   in terminal            │         │
+│   - add a menu               │    │contains zero       │ - get user input via     │         │
+│   - list menu types          │    │  or more           │   numbered list in       │         │
+│   - list content of a menu   │    │  menus             │   in terminal            │         │
 │                              │    │                    └────────▲─────────────────┘         │
 └──────────────────────────────┘    │                             │                           │
                                     │                             │                           │
@@ -73,7 +73,7 @@ relationships between classes.
             │                                   meals
      ┌──────▼─────────────────┐                     │
      │                        │                     │
-     │ MEAL                   ◄─────────────────────┘
+     │ MenuItem               ◄─────────────────────┘
      │ ----                   │
      │   - name               │
      │   - price              │
@@ -86,6 +86,41 @@ Steps 3, 4, and 5 then operate as a cycle.
 Create examples of the classes being used together in different situations
 and combinations that reflect the ways in which the system will be used.
 
+``` ruby
+quarks = Takeaway.new("Quark's bar and grill")
+quarks_drinks = Menu.new("Drinks")
+quarks_drinks.add(MenuItem.new("Bajoran Ale", 1.50))
+quarks_drinks.add(MenuItem.new("Bloodwine", 3.75))
+quarks_drinks.add(MenuItem.new("Saurian Brandy", 2.60))
+
+quarks_starters = Menu.new("Starters")
+quarks_starters.add(MenuItem.new("Bajoran shrimp", 6.78))
+quarks_starters.add(MenuItem.new("Tube grubs", 6.78))
+quarks_starters.add(MenuItem.new("Plomeek soup", 7.25))
+
+quarks_mains = Menu.new("Main meals")
+quarks_mains.add(MenuItem.new("Jumbo Vulcan Molluscs", 10.50))
+quarks_mains.add(MenuItem.new("Hasperat", 11.75))
+quarks_mains.add(MenuItem.new("Heart of Targ", 12.50))
+
+quarks_desserts = Menu.new("Desserts")
+quarks_desserts.add(MenuItem.new("Bajoran Jumba Stick", 5.30))
+quarks_desserts.add(MenuItem.new("Rokeg Blood Pie", 15.10))
+quarks_desserts.add(MenuItem.new("Red Velvet Cake", 12.40))
+
+quarks.add(quarks_drinks)
+quarks.add(quarks_starters)
+quarks.add(quarks_mains)
+quarks.add(quarks_desserts)
+
+controller = Controller.new(takeaway, interface)
+controller.start_order(order)
+<!-- At this point, the user will move around various menus and add to order, view order, place order -->
+controller.add_to_order(menu_item)
+controller.add_to_order(menu_item)
+controller.add_to_order(menu_item)
+controller.place_order
+```
 Encode one of these as a test and move to step 4.
 
 ## 4. Create Examples as Unit Tests
