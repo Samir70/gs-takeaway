@@ -34,7 +34,7 @@ relationships between classes.
        │                                                                     │
        │   - init(takeaway)                                                  │
        │   - start_order(order),                                             │
-       │      - has views: view_menus, view_menu_items, view_order           │
+       │      - has views: view_menu_types, view_menu_items, view_order      │
        │   - add_to_order                                                    │
        │   - place_order                                                     │
        │                                                                     ├────────────────┐
@@ -59,9 +59,9 @@ relationships between classes.
    │ MENU                      │    │         ┌───────────────────┴─────────────┐             │
    │ ----                      │◄───┘         │                                 │             │
    │                           │              │ CUSTOMER'S ORDER                │             │
-   │  - list _meals in format  │              │ ----------------                │             │
-   │    that includes          │              │                                 │             │
-   │    name and cost          │              │   - add meals (with quantity)   │             │
+   │  - list_meals             │              │ ----------------                │             │
+   │                           │              │                                 │             │
+   │                           │              │   - add meals (with quantity)   │             │
    │  - init with type eg:     │              │   - list meals                  │             │
    │    starter, etc           │              │     with cost for quantity      │◄────────────┘
    └────────┬──────────────────┘              │     with total cost             │
@@ -77,14 +77,13 @@ relationships between classes.
      │ ----                   │
      │   - name               │
      │   - price              │
+     │   - format for display │
      └────────────────────────┘
 
 Steps 3, 4, and 5 then operate as a cycle.
 
 ## 3. Create Examples as Integration Tests
-
-Create examples of the classes being used together in different situations
-and combinations that reflect the ways in which the system will be used.
+Overview of use case, setting up a controller with a full takeaway that has four menus
 
 ``` ruby
 quarks = Takeaway.new("Quark's bar and grill")
@@ -121,6 +120,77 @@ controller.add_to_order(menu_item)
 controller.add_to_order(menu_item)
 controller.place_order
 ```
+Create examples of the classes being used together in different situations
+and combinations that reflect the ways in which the system will be used.
+
+``` ruby
+# test 1 - a menu can add menu_items
+quarks_drinks = Menu.new("Drinks")
+drink_1 = MenuItem.new("Bajoran Ale", 1.50))
+drink_2 = MenuItem.new("Bloodwine", 3.75))
+drink_3 = MenuItem.new("Saurian Brandy", 2.60))
+quarks_drinks.add(drink_1)
+quarks_drinks.add(drink_2)
+quarks_drinks.add(drink_3)
+expect(quarks_drinks.list_meals).to be [drink_1, drink_2, drink_3]
+
+# test 2 - a takeaway can add menus and list their types
+quarks = Takeaway.new("Quark's bar and grill")
+quarks_drinks = Menu.new("Drinks")
+quarks_drinks.add(MenuItem.new("Bajoran Ale", 1.50))
+quarks_drinks.add(MenuItem.new("Bloodwine", 3.75))
+quarks_drinks.add(MenuItem.new("Saurian Brandy", 2.60))
+
+quarks_starters = Menu.new("Starters")
+quarks_starters.add(MenuItem.new("Bajoran shrimp", 6.78))
+quarks_starters.add(MenuItem.new("Tube grubs", 6.78))
+quarks_starters.add(MenuItem.new("Plomeek soup", 7.25))
+
+quarks.add(quarks_drinks)
+quarks.add(quarks_starters)
+expect(quarks.list_menu_types).to be ["Drinks", "Starters"]
+
+# test 3 - a takeaway can add menus and list items on that menu
+quarks = Takeaway.new("Quark's bar and grill")
+quarks_drinks = Menu.new("Drinks")
+drink_1 = MenuItem.new("Bajoran Ale", 1.50))
+drink_2 = MenuItem.new("Bloodwine", 3.75))
+drink_3 = MenuItem.new("Saurian Brandy", 2.60))
+quarks_drinks.add(drink_1)
+quarks_drinks.add(drink_2)
+quarks_drinks.add(drink_3)
+
+quarks.add(quarks_drinks)
+expect(quarks.list_menu_items(quarks_drinks)).to be [drink_1, drink_2, drink_3]
+
+# test 4 - a controller can be initialised with a takeaway and start an order
+quarks = Takeaway.new("Quark's bar and grill")
+quarks_drinks = Menu.new("Drinks")
+quarks_starters = Menu.new("Starters")
+quarks_mains = Menu.new("Main meals")
+quarks_desserts = Menu.new("Desserts")
+
+quarks.add(quarks_drinks)
+quarks.add(quarks_starters)
+quarks.add(quarks_mains)
+quarks.add(quarks_desserts)
+
+terminal = double :fake_terminal
+interface = Interface.new(terminal)
+controller = Controller.new(takeaway, interface)
+order = CustomerOrder.new()
+controller.start_order(order)
+
+expect(interface).to receive(:get_user_choice)
+    .with("Choose a menu", ["Drinks", "Starters", "Main meals", "Desserts"]) #.and_return(0)
+expect(terminal).to receive(:puts).with("Choose a menu (1-4)").ordered
+expect(terminal).to receive(:puts).with("[1] Drinks").ordered
+expect(terminal).to receive(:puts).with("[2] Starters").ordered
+expect(terminal).to receive(:puts).with("[3] Main Meals").ordered
+expect(terminal).to receive(:puts).with("[4] Desserts").ordered
+expect(terminal).to receive(:gets).ordered
+```
+
 Encode one of these as a test and move to step 4.
 
 ## 4. Create Examples as Unit Tests
