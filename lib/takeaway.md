@@ -163,7 +163,7 @@ quarks_drinks.add(drink_3)
 quarks.add(quarks_drinks)
 expect(quarks.list_menu_items(quarks_drinks)).to be [drink_1, drink_2, drink_3]
 
-# test 4 - a controller can be initialised with a takeaway and start an order
+# test 4 - whole shebang: user is asked to pick a menu
 quarks = Takeaway.new("Quark's bar and grill")
 quarks_drinks = Menu.new("Drinks")
 quarks_starters = Menu.new("Starters")
@@ -182,13 +182,50 @@ order = CustomerOrder.new()
 controller.start_order(order)
 
 expect(interface).to receive(:get_user_choice)
-    .with("Choose a menu", ["Drinks", "Starters", "Main meals", "Desserts"]) #.and_return(0)
+    .with("Choose a menu", ["Drinks", "Starters", "Main meals", "Desserts"]) 
 expect(terminal).to receive(:puts).with("Choose a menu (1-4)").ordered
 expect(terminal).to receive(:puts).with("[1] Drinks").ordered
 expect(terminal).to receive(:puts).with("[2] Starters").ordered
 expect(terminal).to receive(:puts).with("[3] Main Meals").ordered
 expect(terminal).to receive(:puts).with("[4] Desserts").ordered
-expect(terminal).to receive(:gets).ordered
+
+# test 5 - whole shebang: a user is asked to pick an item from a menu
+quarks = Takeaway.new("Quark's bar and grill")
+quarks_drinks = Menu.new("Drinks")
+quarks_drinks.add(MenuItem.new("Bajoran Ale", 1.50))
+quarks_drinks.add(MenuItem.new("Bloodwine", 3.75))
+quarks_drinks.add(MenuItem.new("Saurian Brandy", 2.60))
+quarks_starters = Menu.new("Starters")
+quarks_mains = Menu.new("Main meals")
+quarks_desserts = Menu.new("Desserts")
+
+quarks.add(quarks_drinks)
+quarks.add(quarks_starters)
+quarks.add(quarks_mains)
+quarks.add(quarks_desserts)
+
+terminal = double :fake_terminal
+interface = Interface.new(terminal)
+controller = Controller.new(takeaway, interface)
+order = CustomerOrder.new()
+controller.start_order(order)
+
+expect(interface).to receive(:get_user_choice)
+    .with("Choose a menu", ["Drinks", "Starters", "Main meals", "Desserts"]) 
+expect(terminal).to receive(:puts).with("Choose a menu (1-4)").ordered
+expect(terminal).to receive(:puts).with("[1] Drinks").ordered
+expect(terminal).to receive(:puts).with("[2] Starters").ordered
+expect(terminal).to receive(:puts).with("[3] Main Meals").ordered
+expect(terminal).to receive(:puts).with("[4] Desserts").ordered
+expect(terminal).to receive(:gets).and_return("1").ordered
+
+expect(interface).to receive(:get_user_choice)
+    .with("Choose an item", ["Bajoran Ale (1.50)", "Bloodwine (3.75)", "Saurian Brandy (2.60)"]) 
+expect(terminal).to receive(:puts).with("Choose an item (1-3)").ordered
+expect(terminal).to receive(:puts).with("[1] Bajoran Ale (1.50)").ordered
+expect(terminal).to receive(:puts).with("[2] Bloodwine (3.75)").ordered
+expect(terminal).to receive(:puts).with("[3] Saurian Brandy (2.60)").ordered
+
 ```
 
 Encode one of these as a test and move to step 4.
