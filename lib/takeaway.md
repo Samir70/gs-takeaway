@@ -29,9 +29,14 @@ relationships between classes.
 
        ┌─────────────────────────────────────────────────────────────────────┐
        │                                                                     │
-       │   CONTROLLER     - communicates selection from takeaway             │
-       │   ----------       to user order                                    │
+       │  CONTROLLER     - communicates selection from takeaway              │
+       │  ----------       to user order                                     │
        │                                                                     │
+       │   - init(takeaway)                                                  │
+       │   - start_order(order),                                             │
+       │      - has views: view_menus, view_menu_items, view_order           │
+       │   - add_to_order                                                    │
+       │   - place_order                                                     │
        │                                                                     ├────────────────┐
        └─┬───────────────────────────────────────────────────────────────┬───┘                │
          │                                                               │                    │
@@ -42,10 +47,10 @@ relationships between classes.
 │                              │                         ┌─────▼─────────▼──────────┐         │
 │ TAKEAWAY                     │                         │                          │         │
 │ --------                     ├────┐                    │ INTERFACE                │         │
-│                              │    │                    │ ---------                │         │
-│   - select a menu            │    │contains zero       │ - get user input via     │         │
-│   - select item from menu    │    │  or more           │   numbered list in       │         │
-│     with quantity            │    │  menus             │   in terminal            │         │
+│   - init with name of shop   │    │                    │ ---------                │         │
+│   - list menu types          │    │contains zero       │ - get user input via     │         │
+│   - list content of a menu   │    │  or more           │   numbered list in       │         │
+│                              │    │  menus             │   in terminal            │         │
 │                              │    │                    └────────▲─────────────────┘         │
 └──────────────────────────────┘    │                             │                           │
                                     │                             │                           │
@@ -57,10 +62,10 @@ relationships between classes.
    │  - list _meals in format  │              │ ----------------                │             │
    │    that includes          │              │                                 │             │
    │    name and cost          │              │   - add meals (with quantity)   │             │
-   │  - init with type         │              │   - list meals                  │             │
+   │  - init with type eg:     │              │   - list meals                  │             │
    │    starter, etc           │              │     with cost for quantity      │◄────────────┘
    └────────┬──────────────────┘              │     with total cost             │
-            │                                 │   - place order                 │
+            │                                 │   -                             │
             │                                 └─────┬───────────────────────────┘
             │ contains zero or more                 │
             │  meals                                │
