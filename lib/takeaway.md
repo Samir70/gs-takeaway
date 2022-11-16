@@ -229,7 +229,7 @@ expect(terminal).to receive(:puts).with("[2] Bloodwine (3.75)").ordered
 expect(terminal).to receive(:puts).with("[3] Saurian Brandy (2.60)").ordered
 
 # test 6 - whole shebang: a user is asked how many of chosen item
-# check that amount makes sense eg: is a positive number
+# also 6b - check that amount makes sense eg: is a positive number
 quarks = Takeaway.new("Quark's bar and grill")
 quarks_drinks = Menu.new("Drinks")
 quarks_drinks.add(MenuItem.new("Bajoran Ale", 1.50))
@@ -268,6 +268,38 @@ expect(terminal).to receive(:puts).with("[3] Saurian Brandy (2.60)").ordered
 expect(terminal).to receive(:gets).and_return("3").ordered
 
 expect(interface).to receive(:get_user_choice).with("How many Saurian Brandys?", [])
+
+# test 7 - whole shebang: user is shown current order and asked add item / place order
+# set up as above plus:
+expect(terminal).to receive(:gets).and_return("5").ordered
+expect(terminal).to receive(:puts).with("Your current order:").ordered
+expect(terminal).to receive(:puts).with("5 x Saurian Brandy @ 2.60each = 13.00").ordered
+expect(terminal).to receive(:puts).with("Please select:").ordered
+expect(terminal).to receive(:puts).with("[1] place order").ordered
+expect(terminal).to receive(:puts).with("[2] add another item").ordered
+
+# test 8 - whole shebang: user wanted another item, back to start
+# set up as above plus:
+expect(terminal).to receive(:gets).and_return("2").ordered
+expect(interface).to receive(:get_user_choice)
+    .with("Choose a menu", ["Drinks", "Starters", "Main meals", "Desserts"]) 
+expect(terminal).to receive(:puts).with("Choose a menu (1-4)").ordered
+expect(terminal).to receive(:puts).with("[1] Drinks").ordered
+expect(terminal).to receive(:puts).with("[2] Starters").ordered
+expect(terminal).to receive(:puts).with("[3] Main Meals").ordered
+expect(terminal).to receive(:puts).with("[4] Desserts").ordered
+
+# test 8b - whole shebang: user wanted another item, back to start
+# set up as upto test 7:
+expect(terminal).to receive(:gets).and_return("1").ordered
+expect(interface).to receive(:tell_user_order_is_complete).with(13) 
+expect(terminal).to receive(:puts).with("Your order (worth £13.00) is on its way!").ordered
+expect(terminal).to receive(:puts).with("Expect it in 100 years.").ordered
+expect(terminal).to receive(:puts).with("Keep your pound sterling, it's worthless!").ordered
+expect(terminal).to receive(:puts).with("You have also been charged 10 bars of Gold-pressed Latinum for delivery!").ordered
+expect(terminal).to receive(:puts).with("All sales are final!").ordered
+expect(terminal).to receive(:puts).with("First rule of Acquisition:").ordered
+expect(terminal).to receive(:puts).with("Once you have their money, you never give it back!").ordered
 
 ```
 
