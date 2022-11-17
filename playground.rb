@@ -1,5 +1,8 @@
-require './lib/menu_item'
+require './lib/controller'
+require './lib/customer_order'
+require './lib/interface'
 require './lib/menu'
+require './lib/menu_item'
 require './lib/takeaway'
 
 @quarks = Takeaway.new("Quark's bar and grill")
@@ -28,5 +31,7 @@ quarks_desserts.add(MenuItem.new("Red Velvet Cake", 12.40))
 @quarks.add(quarks_mains)
 @quarks.add(quarks_desserts)
 
-# controller = Controller.new(takeaway, interface)
-# controller.start_order(order)
+interface = Interface.new(Kernel)
+controller = Controller.new(@quarks, interface)
+order = CustomerOrder.new
+controller.start_order(order)
