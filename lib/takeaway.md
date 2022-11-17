@@ -126,9 +126,9 @@ and combinations that reflect the ways in which the system will be used.
 ``` ruby
 # test 1 - a menu can add menu_items
 quarks_drinks = Menu.new("Drinks")
-drink_1 = MenuItem.new("Bajoran Ale", 1.50))
-drink_2 = MenuItem.new("Bloodwine", 3.75))
-drink_3 = MenuItem.new("Saurian Brandy", 2.60))
+drink_1 = MenuItem.new("Bajoran Ale", 1.50)
+drink_2 = MenuItem.new("Bloodwine", 3.75)
+drink_3 = MenuItem.new("Saurian Brandy", 2.60)
 quarks_drinks.add(drink_1)
 quarks_drinks.add(drink_2)
 quarks_drinks.add(drink_3)
