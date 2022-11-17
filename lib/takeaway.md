@@ -59,7 +59,7 @@ relationships between classes.
    │ MENU                      │    │         ┌───────────────────┴─────────────┐             │
    │ ----                      │◄───┘         │                                 │             │
    │                           │              │ CUSTOMER'S ORDER                │             │
-   │  - list_meals             │              │ ----------------                │             │
+   │  - list_items             │              │ ----------------                │             │
    │                           │              │                                 │             │
    │                           │              │   - add meals (with quantity)   │             │
    │  - init with type eg:     │              │   - list meals                  │             │
@@ -132,7 +132,7 @@ drink_3 = MenuItem.new("Saurian Brandy", 2.60)
 quarks_drinks.add(drink_1)
 quarks_drinks.add(drink_2)
 quarks_drinks.add(drink_3)
-expect(quarks_drinks.list_meals).to be [drink_1, drink_2, drink_3]
+expect(quarks_drinks.list_items).to be [drink_1, drink_2, drink_3]
 
 # test 2 - a takeaway can add menus and list their types
 quarks = Takeaway.new("Quark's bar and grill")
