@@ -4,9 +4,9 @@ RSpec.describe Takeaway do
   before(:each) do
     @quarks = Takeaway.new("Quark's bar and grill")
     @quarks_drinks = double(:fake_menu, menu_type: "Drinks")
-    quarks_starters = double(:fake_menu, menu_type: "Starters")
+    @quarks_starters = double(:fake_menu, menu_type: "Starters")
     @quarks.add(@quarks_drinks)
-    @quarks.add(quarks_starters)
+    @quarks.add(@quarks_starters)
   end
   it "initialises with a name" do
     expect(@quarks.shop_name).to eq "Quark's bar and grill"
@@ -14,6 +14,9 @@ RSpec.describe Takeaway do
 
   it "lists the types of its menus" do
     expect(@quarks.list_menu_types).to eq ["Drinks", "Starters"]
+  end
+  it "lists its menus" do
+    expect(@quarks.menus).to eq [@quarks_drinks, @quarks_starters]
   end
   it "lists the items on one of its menus" do
     drink_1 = double :fake_menu_item

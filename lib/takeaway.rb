@@ -16,5 +16,5 @@ class Takeaway
         return menu.list_items
     end
 
-    attr_reader :shop_name
+    attr_reader :shop_name, :menus
 end
