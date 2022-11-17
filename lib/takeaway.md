@@ -132,7 +132,7 @@ drink_3 = MenuItem.new("Saurian Brandy", 2.60)
 quarks_drinks.add(drink_1)
 quarks_drinks.add(drink_2)
 quarks_drinks.add(drink_3)
-expect(quarks_drinks.list_items).to be [drink_1, drink_2, drink_3]
+expect(quarks_drinks.list_items).to eq [drink_1, drink_2, drink_3]
 
 # test 2 - a takeaway can add menus and list their types
 quarks = Takeaway.new("Quark's bar and grill")
@@ -148,7 +148,7 @@ quarks_starters.add(MenuItem.new("Plomeek soup", 7.25))
 
 quarks.add(quarks_drinks)
 quarks.add(quarks_starters)
-expect(quarks.list_menu_types).to be ["Drinks", "Starters"]
+expect(quarks.list_menu_types).to eq ["Drinks", "Starters"]
 
 # test 3 - a takeaway can add menus and list items on that menu
 quarks = Takeaway.new("Quark's bar and grill")
@@ -161,7 +161,7 @@ quarks_drinks.add(drink_2)
 quarks_drinks.add(drink_3)
 
 quarks.add(quarks_drinks)
-expect(quarks.list_menu_items(quarks_drinks)).to be [drink_1, drink_2, drink_3]
+expect(quarks.list_menu_items(quarks_drinks)).to eq [drink_1, drink_2, drink_3]
 
 # test 4 - whole shebang: user is asked to pick a menu
 # add another to repeat instructions if answer doesn't make sense
