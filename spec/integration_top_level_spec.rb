@@ -24,7 +24,7 @@ RSpec.describe "integration of the whole shebang" do
     order = CustomerOrder.new()
     controller.start_order(order)
     expect(interface).to receive(:get_user_choice)
-                           .with("Choose a menu", ["Drinks", "Starters", "Main meals", "Desserts"])
+                           .with("Choose a menu (1-4)", ["Drinks", "Starters", "Main meals", "Desserts"])
     expect(terminal).to receive(:puts).with("Choose a menu (1-4)").ordered
     expect(terminal).to receive(:puts).with("[1] Drinks").ordered
     expect(terminal).to receive(:puts).with("[2] Starters").ordered
