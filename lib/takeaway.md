@@ -125,37 +125,29 @@ and combinations that reflect the ways in which the system will be used.
 
 ``` ruby
 # test 1 - a menu can add menu_items
-quarks_drinks = Menu.new("Drinks")
-drink_1 = MenuItem.new("Bajoran Ale", 1.50)
-drink_2 = MenuItem.new("Bloodwine", 3.75)
-drink_3 = MenuItem.new("Saurian Brandy", 2.60)
-quarks_drinks.add(drink_1)
-quarks_drinks.add(drink_2)
-quarks_drinks.add(drink_3)
-expect(quarks_drinks.list_items).to eq [drink_1, drink_2, drink_3]
+# quarks_drinks = Menu.new("Drinks")
+# drink_1 = MenuItem.new("Bajoran Ale", 1.50)
+# drink_2 = MenuItem.new("Bloodwine", 3.75)
+# drink_3 = MenuItem.new("Saurian Brandy", 2.60)
+# quarks_drinks.add(drink_1)
+# quarks_drinks.add(drink_2)
+# quarks_drinks.add(drink_3)
+# expect(quarks_drinks.list_items).to eq [drink_1, drink_2, drink_3]
 
 # test 2 - a takeaway can add menus and list their types
-quarks = Takeaway.new("Quark's bar and grill")
-quarks_drinks = Menu.new("Drinks")
-quarks_drinks.add(MenuItem.new("Bajoran Ale", 1.50))
-quarks_drinks.add(MenuItem.new("Bloodwine", 3.75))
-quarks_drinks.add(MenuItem.new("Saurian Brandy", 2.60))
-
-quarks_starters = Menu.new("Starters")
-quarks_starters.add(MenuItem.new("Bajoran shrimp", 6.78))
-quarks_starters.add(MenuItem.new("Tube grubs", 6.78))
-quarks_starters.add(MenuItem.new("Plomeek soup", 7.25))
-
-quarks.add(quarks_drinks)
-quarks.add(quarks_starters)
-expect(quarks.list_menu_types).to eq ["Drinks", "Starters"]
+# quarks = Takeaway.new("Quark's bar and grill")
+# quarks_drinks = Menu.new("Drinks")
+# quarks_starters = Menu.new("Starters")
+# quarks.add(quarks_drinks)
+# quarks.add(quarks_starters)
+# expect(quarks.list_menu_types).to eq ["Drinks", "Starters"]
 
 # test 3 - a takeaway can add menus and list items on that menu
 quarks = Takeaway.new("Quark's bar and grill")
 quarks_drinks = Menu.new("Drinks")
-drink_1 = MenuItem.new("Bajoran Ale", 1.50))
-drink_2 = MenuItem.new("Bloodwine", 3.75))
-drink_3 = MenuItem.new("Saurian Brandy", 2.60))
+drink_1 = MenuItem.new("Bajoran Ale", 1.50)
+drink_2 = MenuItem.new("Bloodwine", 3.75)
+drink_3 = MenuItem.new("Saurian Brandy", 2.60)
 quarks_drinks.add(drink_1)
 quarks_drinks.add(drink_2)
 quarks_drinks.add(drink_3)

@@ -1,7 +1,7 @@
 require "menu"
 require "menu_item"
 
-RSpec.describe "integration of Menu" do
+RSpec.describe "integration at level of Menu" do
   it "can add MenuItems" do
     quarks_drinks = Menu.new("Drinks")
     drink_1 = MenuItem.new("Bajoran Ale", 1.50)
