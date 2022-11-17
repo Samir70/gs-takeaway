@@ -33,4 +33,25 @@ RSpec.describe Interface do
       expect { @interface.get_user_choice("Choose a menu (1-4)", ["Drinks", "Starters", "Main Meals"]) }.to raise_error "ERROR:: user picked an invalid valid option. Should be a number 1..3"
     end
   end
+
+  context "get_quantity" do
+    it "asks user for how much of an item" do
+        item = double :fake_item, name: "Saurian Brandy", cost:2.6
+        expect(@terminal).to receive(:puts).with("How many Saurian Brandys?")
+        expect(@terminal).to receive(:gets).and_return("5")
+        @interface.get_quantity(item)
+    end
+    it "accepts positive response" do
+        item = double :fake_item, name: "Saurian Brandy", cost:2.6
+        expect(@terminal).to receive(:puts).with("How many Saurian Brandys?")
+        expect(@terminal).to receive(:gets).and_return("5")
+        @interface.get_quantity(item)
+    end
+    it "raises error for non-positive response" do
+        item = double :fake_item, name: "Saurian Brandy", cost:2.6
+        expect(@terminal).to receive(:puts).with("How many Saurian Brandys?")
+        expect(@terminal).to receive(:gets).and_return("0")
+        expect{@interface.get_quantity(item)}.to raise_error "ERROR:: you can't buy that many!!!"
+    end
+  end
 end

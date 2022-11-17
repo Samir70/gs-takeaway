@@ -21,13 +21,23 @@ class Controller
     chosen_menu = @interface.get_user_choice(
       "Choose a menu (1-#{menu_types.length})", menu_types
     )
-    ask_user_to_pick_item(@shop.menus[chosen_menu - 1])
+    ask_user_to_pick_item(@shop.menus[chosen_menu - 1]) if chosen_menu
   end
 
   def ask_user_to_pick_item(menu)
-    items = menu.list_items.map(&:formatted)
+    items = menu.list_items
     chosen_item = @interface.get_user_choice(
-      "Choose an item (1-#{items.length})", items
+      "Choose an item (1-#{items.length})", items.map(&:formatted)
     )
+    ask_user_how_many(items[chosen_item - 1]) if chosen_item
+  end
+
+  def ask_user_how_many(item)
+    quantity = @interface.get_quantity(item)
+    if quantity
+        @customer_order.add_items(quantity, item)
+        @interface.show_order(@customer_order)
+        @interface.get_next_step
+    end
   end
 end

@@ -14,5 +14,14 @@ class Interface
         return @response
     end
 
+    def get_quantity(item)
+        @io.puts "How many #{item.name}s?"
+        res = @io.gets.to_i
+        if res <= 0 
+            fail("ERROR:: you can't buy that many!!!")
+        end
+        return res
+    end
+
     attr_reader :response
 end

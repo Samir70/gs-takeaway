@@ -20,9 +20,7 @@ RSpec.describe Controller do
   context "controller starts an order" do
     it "asks user to pick a menu" do
       expect(@takeaway).to receive(:list_menu_types).and_return(["Drinks", "Starters", "Main meals", "Desserts"]).ordered
-      expect(@interface).to receive(:get_user_choice).with("Choose a menu (1-4)", ["Drinks", "Starters", "Main meals", "Desserts"]).and_return(1).ordered
-      expect(@menu).to receive(:list_items).and_return([@item_1, @item_2, @item_3]).ordered
-      expect(@interface).to receive(:get_user_choice).ordered
+      expect(@interface).to receive(:get_user_choice).with("Choose a menu (1-4)", ["Drinks", "Starters", "Main meals", "Desserts"]).ordered
       order = double :fake_order
       @controller.start_order(order)
     end
@@ -33,6 +31,29 @@ RSpec.describe Controller do
       expect(@menu).to receive(:list_items).and_return([@item_1, @item_2, @item_3])
       expect(@interface).to receive(:get_user_choice).with("Choose an item (1-3)", ["Bajoran Ale (£1.50)", "Bloodwine (£3.75)", "Saurian Brandy (£2.60)"])
       order = double :fake_order
+      @controller.start_order(order)
+    end
+    it "asks user how many of an item" do
+      menu = double :fake_menu
+      expect(@takeaway).to receive(:list_menu_types).and_return(["Drinks", "Starters", "Main meals", "Desserts"])
+      expect(@interface).to receive(:get_user_choice).with("Choose a menu (1-4)", ["Drinks", "Starters", "Main meals", "Desserts"]).and_return(1)
+      expect(@menu).to receive(:list_items).and_return([@item_1, @item_2, @item_3])
+      expect(@interface).to receive(:get_user_choice).with("Choose an item (1-3)", ["Bajoran Ale (£1.50)", "Bloodwine (£3.75)", "Saurian Brandy (£2.60)"]).and_return(3)
+      expect(@interface).to receive(:get_quantity).with(@item_3)
+      order = double :fake_order
+      @controller.start_order(order)
+    end
+    it "show the order after getting quantity and item" do
+      menu = double :fake_menu
+      order = double :fake_order
+      expect(@takeaway).to receive(:list_menu_types).and_return(["Drinks", "Starters", "Main meals", "Desserts"])
+      expect(@interface).to receive(:get_user_choice).with("Choose a menu (1-4)", ["Drinks", "Starters", "Main meals", "Desserts"]).and_return(1)
+      expect(@menu).to receive(:list_items).and_return([@item_1, @item_2, @item_3])
+      expect(@interface).to receive(:get_user_choice).with("Choose an item (1-3)", ["Bajoran Ale (£1.50)", "Bloodwine (£3.75)", "Saurian Brandy (£2.60)"]).and_return(3)
+      expect(@interface).to receive(:get_quantity).with(@item_3).and_return(5)
+      expect(order).to receive(:add_items).with(5, @item_3)
+      expect(@interface).to receive(:show_order)
+      expect(@interface).to receive(:get_next_step)
       @controller.start_order(order)
     end
   end
