@@ -184,41 +184,41 @@ and combinations that reflect the ways in which the system will be used.
 
 # test 5 - whole shebang: a user is asked to pick an item from a menu
 # add another to repeat instructions if answer doesn't make sense
-quarks = Takeaway.new("Quark's bar and grill")
-quarks_drinks = Menu.new("Drinks")
-quarks_drinks.add(MenuItem.new("Bajoran Ale", 1.50))
-quarks_drinks.add(MenuItem.new("Bloodwine", 3.75))
-quarks_drinks.add(MenuItem.new("Saurian Brandy", 2.60))
-quarks_starters = Menu.new("Starters")
-quarks_mains = Menu.new("Main meals")
-quarks_desserts = Menu.new("Desserts")
+# quarks = Takeaway.new("Quark's bar and grill")
+# quarks_drinks = Menu.new("Drinks")
+# quarks_drinks.add(MenuItem.new("Bajoran Ale", 1.50))
+# quarks_drinks.add(MenuItem.new("Bloodwine", 3.75))
+# quarks_drinks.add(MenuItem.new("Saurian Brandy", 2.60))
+# quarks_starters = Menu.new("Starters")
+# quarks_mains = Menu.new("Main meals")
+# quarks_desserts = Menu.new("Desserts")
 
-quarks.add(quarks_drinks)
-quarks.add(quarks_starters)
-quarks.add(quarks_mains)
-quarks.add(quarks_desserts)
+# quarks.add(quarks_drinks)
+# quarks.add(quarks_starters)
+# quarks.add(quarks_mains)
+# quarks.add(quarks_desserts)
 
-terminal = double :fake_terminal
-interface = Interface.new(terminal)
-controller = Controller.new(takeaway, interface)
-order = CustomerOrder.new()
-controller.start_order(order)
+# terminal = double :fake_terminal
+# interface = Interface.new(terminal)
+# controller = Controller.new(takeaway, interface)
+# order = CustomerOrder.new()
+# controller.start_order(order)
 
-expect(interface).to receive(:get_user_choice)
-    .with("Choose a menu", ["Drinks", "Starters", "Main meals", "Desserts"]) 
-expect(terminal).to receive(:puts).with("Choose a menu (1-4)").ordered
-expect(terminal).to receive(:puts).with("[1] Drinks").ordered
-expect(terminal).to receive(:puts).with("[2] Starters").ordered
-expect(terminal).to receive(:puts).with("[3] Main Meals").ordered
-expect(terminal).to receive(:puts).with("[4] Desserts").ordered
-expect(terminal).to receive(:gets).and_return("1").ordered
+# expect(interface).to receive(:get_user_choice)
+#     .with("Choose a menu", ["Drinks", "Starters", "Main meals", "Desserts"]) 
+# expect(terminal).to receive(:puts).with("Choose a menu (1-4)").ordered
+# expect(terminal).to receive(:puts).with("[1] Drinks").ordered
+# expect(terminal).to receive(:puts).with("[2] Starters").ordered
+# expect(terminal).to receive(:puts).with("[3] Main Meals").ordered
+# expect(terminal).to receive(:puts).with("[4] Desserts").ordered
+# expect(terminal).to receive(:gets).and_return("1").ordered
 
-expect(interface).to receive(:get_user_choice)
-    .with("Choose an item (1-3)", ["Bajoran Ale (1.50)", "Bloodwine (3.75)", "Saurian Brandy (2.60)"]) 
-expect(terminal).to receive(:puts).with("Choose an item (1-3)").ordered
-expect(terminal).to receive(:puts).with("[1] Bajoran Ale (1.50)").ordered
-expect(terminal).to receive(:puts).with("[2] Bloodwine (3.75)").ordered
-expect(terminal).to receive(:puts).with("[3] Saurian Brandy (2.60)").ordered
+# expect(interface).to receive(:get_user_choice)
+#     .with("Choose an item (1-3)", ["Bajoran Ale (1.50)", "Bloodwine (3.75)", "Saurian Brandy (2.60)"]) 
+# expect(terminal).to receive(:puts).with("Choose an item (1-3)").ordered
+# expect(terminal).to receive(:puts).with("[1] Bajoran Ale (1.50)").ordered
+# expect(terminal).to receive(:puts).with("[2] Bloodwine (3.75)").ordered
+# expect(terminal).to receive(:puts).with("[3] Saurian Brandy (2.60)").ordered
 
 # test 6 - whole shebang: a user is asked how many of chosen item
 # also 6b - check that amount makes sense eg: is a positive number
@@ -259,7 +259,7 @@ expect(terminal).to receive(:puts).with("[2] Bloodwine (3.75)").ordered
 expect(terminal).to receive(:puts).with("[3] Saurian Brandy (2.60)").ordered
 expect(terminal).to receive(:gets).and_return("3").ordered
 
-expect(interface).to receive(:get_user_choice).with("How many Saurian Brandys?", [])
+expect(interface).to receive(:get_quantity).with("How many Saurian Brandys?")
 
 # test 7 - whole shebang: user is shown current order and asked add item / place order
 # set up as above plus:

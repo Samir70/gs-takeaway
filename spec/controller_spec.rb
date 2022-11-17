@@ -32,10 +32,6 @@ RSpec.describe Controller do
       expect(@interface).to receive(:get_user_choice).with("Choose a menu (1-4)", ["Drinks", "Starters", "Main meals", "Desserts"]).and_return(1)
       expect(@menu).to receive(:list_items).and_return([@item_1, @item_2, @item_3])
       expect(@interface).to receive(:get_user_choice).with("Choose an item (1-3)", ["Bajoran Ale (£1.50)", "Bloodwine (£3.75)", "Saurian Brandy (£2.60)"])
-      #   expect(@terminal).to receive(:puts).with("Choose an item (1-3)").ordered
-      #   expect(@terminal).to receive(:puts).with("[1] Bajoran Ale (1.50)").ordered
-      #   expect(@terminal).to receive(:puts).with("[2] Bloodwine (3.75)").ordered
-      #   expect(@terminal).to receive(:puts).with("[3] Saurian Brandy (2.60)").ordered
       order = double :fake_order
       @controller.start_order(order)
     end
