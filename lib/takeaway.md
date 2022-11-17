@@ -170,7 +170,7 @@ quarks.add(quarks_desserts)
 
 terminal = double :fake_terminal
 interface = Interface.new(terminal)
-controller = Controller.new(takeaway, interface)
+controller = Controller.new(quarks, interface)
 order = CustomerOrder.new()
 controller.start_order(order)
 
