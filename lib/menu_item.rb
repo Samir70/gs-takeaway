@@ -4,5 +4,9 @@ class MenuItem
         @cost = cost
     end
 
+    def formatted
+        return "#{@name} (£#{'%.2f' % @cost})"
+    end
+
     attr_reader :name, :cost
 end

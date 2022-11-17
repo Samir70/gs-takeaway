@@ -16,7 +16,7 @@ quarks_starters.add(MenuItem.new("Bajoran shrimp", 6.78))
 quarks_starters.add(MenuItem.new("Tube grubs", 6.78))
 quarks_starters.add(MenuItem.new("Plomeek soup", 7.25))
 
-quarks_mains = Menu.new("Main meals")
+quarks_mains = Menu.new("Main Meals")
 quarks_mains.add(MenuItem.new("Jumbo Vulcan Molluscs", 10.50))
 quarks_mains.add(MenuItem.new("Hasperat", 11.75))
 quarks_mains.add(MenuItem.new("Heart of Targ", 12.50))
@@ -31,6 +31,7 @@ quarks_desserts.add(MenuItem.new("Red Velvet Cake", 12.40))
 @quarks.add(quarks_mains)
 @quarks.add(quarks_desserts)
 
+# comment out below for use in irb
 interface = Interface.new(Kernel)
 controller = Controller.new(@quarks, interface)
 order = CustomerOrder.new
