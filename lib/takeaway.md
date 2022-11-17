@@ -269,6 +269,8 @@ expect(terminal).to receive(:puts).with("5 x Saurian Brandy @ 2.60each = 13.00")
 expect(terminal).to receive(:puts).with("Please select:").ordered
 expect(terminal).to receive(:puts).with("[1] place order").ordered
 expect(terminal).to receive(:puts).with("[2] add another item").ordered
+expect(order.items).to eq ["5 x Saurian Brandy @ 2.60each = 13.00"]
+expect(order.value).to eq 13.0
 
 # test 8 - whole shebang: user wanted another item, back to start
 # set up as above plus:
