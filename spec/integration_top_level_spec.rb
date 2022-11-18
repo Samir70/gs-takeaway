@@ -60,4 +60,36 @@ RSpec.describe "integration of the whole shebang" do
     order = CustomerOrder.new()
     @controller.start_order(order)
   end
+  it "asks user how many of selected item" do
+    # The calls from previous tests:
+    expect(@terminal).to receive(:puts).exactly(5).times.ordered
+    expect(@terminal).to receive(:gets).and_return("1").ordered
+    expect(@terminal).to receive(:puts).exactly(4).times.ordered
+    # new:
+    expect(@terminal).to receive(:gets).and_return("3").ordered
+    expect(@terminal).to receive(:puts).with("How many Saurian Brandys?").ordered
+    expect(@terminal).to receive(:gets).and_return("5")
+    expect(@terminal).to receive(:puts).at_least(:once)
+    order = CustomerOrder.new()
+    @controller.start_order(order)
+  end
+  it "shows user current order and asks what next" do
+    # The calls from previous tests:
+    expect(@terminal).to receive(:puts).exactly(5).times.ordered
+    expect(@terminal).to receive(:gets).and_return("1").ordered
+    expect(@terminal).to receive(:puts).exactly(4).times.ordered
+    expect(@terminal).to receive(:gets).and_return("3").ordered
+    expect(@terminal).to receive(:puts).with("How many Saurian Brandys?").ordered
+    expect(@terminal).to receive(:gets).and_return("5")
+    # new:
+    expect(@terminal).to receive(:puts).with("Your current order:").ordered
+    expect(@terminal).to receive(:puts).with("5 x Saurian Brandy @ £2.60each = £13.00").ordered
+    expect(@terminal).to receive(:puts).with("Total value is £13.00").ordered
+    expect(@terminal).to receive(:puts).with("Please select:").ordered
+    expect(@terminal).to receive(:puts).with("[1] place order").ordered
+    expect(@terminal).to receive(:puts).with("[2] add another item").ordered
+    # expect(@terminal).to receive(:puts).at_least(:once)
+    order = CustomerOrder.new()
+    @controller.start_order(order)
+  end
 end
