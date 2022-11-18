@@ -26,6 +26,7 @@ class Interface
     def show_order(order)
         @io.puts "Your current order:"
         order.items.each { |item| @io.puts item }
+        @io.puts "Total value is £#{'%.2f' % order.total_cost}"
     end
 
     def get_next_step

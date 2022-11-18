@@ -55,10 +55,11 @@ RSpec.describe Interface do
     end
   end
   it "shows an order" do
-    order = double :fake_order, total_cost: 13.0, items: ["5 x Saurian Brandy @ £2.60each = £13.00", "2 x Egg Sandwich @ £1.80each = £3.60"]
+    order = double :fake_order, total_cost: 16.60, items: ["5 x Saurian Brandy @ £2.60each = £13.00", "2 x Egg Sandwich @ £1.80each = £3.60"]
     expect(@terminal).to receive(:puts).with("Your current order:").ordered
     expect(@terminal).to receive(:puts).with("5 x Saurian Brandy @ £2.60each = £13.00").ordered
     expect(@terminal).to receive(:puts).with("2 x Egg Sandwich @ £1.80each = £3.60").ordered
+    expect(@terminal).to receive(:puts).with("Total value is £16.60").ordered
     @interface.show_order(order)
   end
   it "asks for next step" do
