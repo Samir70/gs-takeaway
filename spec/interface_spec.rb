@@ -62,10 +62,30 @@ RSpec.describe Interface do
     expect(@terminal).to receive(:puts).with("Total value is £16.60").ordered
     @interface.show_order(order)
   end
-  it "asks for next step" do
-    expect(@terminal).to receive(:puts).with("Please select:").ordered
-    expect(@terminal).to receive(:puts).with("[1] place order").ordered
-    expect(@terminal).to receive(:puts).with("[2] add another item").ordered
-    @interface.get_next_step
+  context "#get_next_step" do
+    it "asks for next step" do
+      expect(@terminal).to receive(:puts).with("Please select:").ordered
+      expect(@terminal).to receive(:puts).with("[1] place order").ordered
+      expect(@terminal).to receive(:puts).with("[2] add another item").ordered
+      allow(@terminal).to receive(:gets).and_return("1")
+      @interface.get_next_step
+    end
+    it "returns 2 if user selects '2'" do
+      expect(@terminal).to receive(:puts).exactly(3).times.ordered
+      expect(@terminal).to receive(:gets).and_return("2")
+      expect(@interface.get_next_step).to eq 2
+    end
+    it "returns 1 if user selects '1'" do
+      expect(@terminal).to receive(:puts).exactly(3).times.ordered
+      expect(@terminal).to receive(:gets).and_return("1")
+      expect(@interface.get_next_step).to eq 1
+    end
+    it "repeats request if choice not '1' or '2'" do
+      expect(@terminal).to receive(:puts).exactly(3).times.ordered
+      expect(@terminal).to receive(:gets).and_return("x").ordered
+      expect(@terminal).to receive(:puts).exactly(3).times.ordered
+      expect(@terminal).to receive(:gets).and_return("1").ordered
+      @interface.get_next_step
+    end
   end
 end
