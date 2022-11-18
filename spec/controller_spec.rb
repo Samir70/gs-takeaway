@@ -51,7 +51,7 @@ RSpec.describe Controller do
       expect(@menu).to receive(:list_items).and_return([@item_1, @item_2, @item_3])
       expect(@interface).to receive(:get_user_choice).with("Choose an item (1-3)", ["Bajoran Ale (£1.50)", "Bloodwine (£3.75)", "Saurian Brandy (£2.60)"]).and_return(3)
       expect(@interface).to receive(:get_quantity).with(@item_3).and_return(5)
-      expect(order).to receive(:add_items).with(5, @item_3)
+      expect(order).to receive(:add_items).with(@item_3, 5)
       expect(@interface).to receive(:show_order)
       expect(@interface).to receive(:get_next_step)
       @controller.start_order(order)
