@@ -88,4 +88,17 @@ RSpec.describe Interface do
       @interface.get_next_step
     end
   end
+  describe "#tell_user_order_is_complete" do
+    it "tells user order is complete" do
+      order = double :fake_order, total_cost: 16.60, items: ["5 x Saurian Brandy @ £2.60each = £13.00", "2 x Egg Sandwich @ £1.80each = £3.60"]
+      expect(@terminal).to receive(:puts).with("Your order (worth £16.60) is on its way!").ordered
+      expect(@terminal).to receive(:puts).with("Expect it in 100 years.").ordered
+      expect(@terminal).to receive(:puts).with("Keep your pound sterling, it's worthless!").ordered
+      expect(@terminal).to receive(:puts).with("You have also been charged 10 bars of Gold-pressed Latinum for delivery!").ordered
+      expect(@terminal).to receive(:puts).with("All sales are final!").ordered
+      expect(@terminal).to receive(:puts).with("First rule of Acquisition:").ordered
+      expect(@terminal).to receive(:puts).with("Once you have their money, you never give it back!").ordered
+      @interface.tell_user_order_is_complete(order)
+    end
+  end
 end

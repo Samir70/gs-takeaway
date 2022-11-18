@@ -81,7 +81,7 @@ RSpec.describe "integration of the whole shebang" do
     expect(@terminal).to receive(:puts).exactly(4).times.ordered
     expect(@terminal).to receive(:gets).and_return("3").ordered
     expect(@terminal).to receive(:puts).with("How many Saurian Brandys?").ordered
-    expect(@terminal).to receive(:gets).and_return("5")
+    expect(@terminal).to receive(:gets).and_return("5").ordered
     # new:
     expect(@terminal).to receive(:puts).with("Your current order:").ordered
     expect(@terminal).to receive(:puts).with("5 x Saurian Brandy @ £2.60each = £13.00").ordered
@@ -89,7 +89,8 @@ RSpec.describe "integration of the whole shebang" do
     expect(@terminal).to receive(:puts).with("Please select:").ordered
     expect(@terminal).to receive(:puts).with("[1] place order").ordered
     expect(@terminal).to receive(:puts).with("[2] add another item").ordered
-    allow(@terminal).to receive(:gets).and_return("1")
+    expect(@terminal).to receive(:gets).and_return("1").ordered
+    expect(@terminal).to receive(:puts).exactly(7).times
     order = CustomerOrder.new()
     @controller.start_order(order)
   end
@@ -125,6 +126,13 @@ RSpec.describe "integration of the whole shebang" do
     expect(@terminal).to receive(:puts).exactly(6).times.ordered
     # new:
     expect(@terminal).to receive(:gets).and_return("1").ordered
+    expect(@terminal).to receive(:puts).with("Your order (worth £13.00) is on its way!").ordered
+    expect(@terminal).to receive(:puts).with("Expect it in 100 years.").ordered
+    expect(@terminal).to receive(:puts).with("Keep your pound sterling, it's worthless!").ordered
+    expect(@terminal).to receive(:puts).with("You have also been charged 10 bars of Gold-pressed Latinum for delivery!").ordered
+    expect(@terminal).to receive(:puts).with("All sales are final!").ordered
+    expect(@terminal).to receive(:puts).with("First rule of Acquisition:").ordered
+    expect(@terminal).to receive(:puts).with("Once you have their money, you never give it back!").ordered
     # expect(@terminal).to receive(:puts).with("Choose a menu (1-4)").ordered
     # expect(@terminal).to receive(:puts).with("[1] Drinks").ordered
     # expect(@terminal).to receive(:puts).with("[2] Starters").ordered

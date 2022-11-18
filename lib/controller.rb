@@ -40,6 +40,8 @@ class Controller
         next_step = @interface.get_next_step
         if next_step == 2
           ask_user_to_pick_menu
+        elsif next_step == 1
+          @interface.tell_user_order_is_complete(@customer_order)
         end
     end
   end

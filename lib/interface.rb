@@ -40,5 +40,15 @@ class Interface
     get_next_step
   end
 
+  def tell_user_order_is_complete(order)
+    @io.puts "Your order (worth £#{'%.2f' % order.total_cost}) is on its way!"
+    @io.puts "Expect it in 100 years."
+    @io.puts "Keep your pound sterling, it's worthless!"
+    @io.puts "You have also been charged 10 bars of Gold-pressed Latinum for delivery!"
+    @io.puts "All sales are final!"
+    @io.puts "First rule of Acquisition:"
+    @io.puts "Once you have their money, you never give it back!"
+  end
+
   attr_reader :response
 end
