@@ -34,24 +34,37 @@ RSpec.describe Interface do
     end
   end
 
-  context "get_quantity" do
+  context "#get_quantity" do
     it "asks user for how much of an item" do
-        item = double :fake_item, name: "Saurian Brandy", cost:2.6
-        expect(@terminal).to receive(:puts).with("How many Saurian Brandys?")
-        expect(@terminal).to receive(:gets).and_return("5")
-        @interface.get_quantity(item)
+      item = double :fake_item, name: "Saurian Brandy", cost: 2.6
+      expect(@terminal).to receive(:puts).with("How many Saurian Brandys?")
+      expect(@terminal).to receive(:gets).and_return("5")
+      @interface.get_quantity(item)
     end
     it "accepts positive response" do
-        item = double :fake_item, name: "Saurian Brandy", cost:2.6
-        expect(@terminal).to receive(:puts).with("How many Saurian Brandys?")
-        expect(@terminal).to receive(:gets).and_return("5")
-        @interface.get_quantity(item)
+      item = double :fake_item, name: "Saurian Brandy", cost: 2.6
+      expect(@terminal).to receive(:puts).with("How many Saurian Brandys?")
+      expect(@terminal).to receive(:gets).and_return("5")
+      @interface.get_quantity(item)
     end
     it "raises error for non-positive response" do
-        item = double :fake_item, name: "Saurian Brandy", cost:2.6
-        expect(@terminal).to receive(:puts).with("How many Saurian Brandys?")
-        expect(@terminal).to receive(:gets).and_return("0")
-        expect{@interface.get_quantity(item)}.to raise_error "ERROR:: you can't buy that many!!!"
+      item = double :fake_item, name: "Saurian Brandy", cost: 2.6
+      expect(@terminal).to receive(:puts).with("How many Saurian Brandys?")
+      expect(@terminal).to receive(:gets).and_return("0")
+      expect { @interface.get_quantity(item) }.to raise_error "ERROR:: you can't buy that many!!!"
     end
+  end
+  it "shows an order" do
+    order = double :fake_order, total_cost: 13.0, items: ["5 x Saurian Brandy @ £2.60each = £13.00", "2 x Egg Sandwich @ £1.80each = £3.60"]
+    expect(@terminal).to receive(:puts).with("Your current order:").ordered
+    expect(@terminal).to receive(:puts).with("5 x Saurian Brandy @ £2.60each = £13.00").ordered
+    expect(@terminal).to receive(:puts).with("2 x Egg Sandwich @ £1.80each = £3.60").ordered
+    @interface.show_order(order)
+  end
+  it "asks for next step" do
+    expect(@terminal).to receive(:puts).with("Please select:").ordered
+    expect(@terminal).to receive(:puts).with("[1] place order").ordered
+    expect(@terminal).to receive(:puts).with("[2] add another item").ordered
+    @interface.get_next_step
   end
 end

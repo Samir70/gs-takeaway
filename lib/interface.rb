@@ -23,5 +23,16 @@ class Interface
         return res
     end
 
+    def show_order(order)
+        @io.puts "Your current order:"
+        order.items.each { |item| @io.puts item }
+    end
+
+    def get_next_step
+        @io.puts "Please select:"
+        @io.puts "[1] place order"
+        @io.puts "[2] add another item"
+    end
+
     attr_reader :response
 end

@@ -48,14 +48,15 @@ RSpec.describe "integration of the whole shebang" do
     @controller.start_order(order)
   end
   it "shows user items from chosen menu" do
-    expect(@terminal).to receive(:puts).exactly(5).times
+    expect(@terminal).to receive(:puts).exactly(5).times.ordered
     # The five from showing the menu, as above
     expect(@terminal).to receive(:gets).and_return("1")
     expect(@terminal).to receive(:puts).with("Choose an item (1-3)").ordered
     expect(@terminal).to receive(:puts).with("[1] Bajoran Ale (£1.50)").ordered
     expect(@terminal).to receive(:puts).with("[2] Bloodwine (£3.75)").ordered
     expect(@terminal).to receive(:puts).with("[3] Saurian Brandy (£2.60)").ordered
-    expect(@terminal).to receive(:gets).and_return("3")
+    allow(@terminal).to receive(:gets).and_return("1")
+    expect(@terminal).to receive(:puts).at_least(:once)
     order = CustomerOrder.new()
     @controller.start_order(order)
   end

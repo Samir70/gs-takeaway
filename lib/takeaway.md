@@ -265,7 +265,7 @@ expect(interface).to receive(:get_quantity).with("How many Saurian Brandys?")
 # set up as above plus:
 expect(terminal).to receive(:gets).and_return("5").ordered
 expect(terminal).to receive(:puts).with("Your current order:").ordered
-expect(terminal).to receive(:puts).with("5 x Saurian Brandy @ 2.60each = 13.00").ordered
+expect(terminal).to receive(:puts).with("5 x Saurian Brandy @ £2.60each = £13.00").ordered
 expect(terminal).to receive(:puts).with("Please select:").ordered
 expect(terminal).to receive(:puts).with("[1] place order").ordered
 expect(terminal).to receive(:puts).with("[2] add another item").ordered
