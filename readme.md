@@ -1,6 +1,6 @@
 # Takeaway
 
-Quark has found a way back to communicate with the 21st Century, and is determined to make profit from  Humans who want to taste futuristic cuisine.
+Quark has found a way to communicate with the 21st Century, and is determined to make profit from  Humans who want to taste futuristic cuisine.
 
 To make your order:
  - clone this repo
