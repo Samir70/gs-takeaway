@@ -42,7 +42,7 @@ RSpec.describe "integration of the whole shebang" do
     expect(@terminal).to receive(:puts).with("[2] Starters").ordered
     expect(@terminal).to receive(:puts).with("[3] Main Meals").ordered
     expect(@terminal).to receive(:puts).with("[4] Desserts").ordered
-    allow(@terminal).to receive(:gets).and_return("2")
+    allow(@terminal).to receive(:gets).and_return("1")
     allow(@terminal).to receive(:puts)
     order = CustomerOrder.new()
     @controller.start_order(order)
@@ -68,8 +68,9 @@ RSpec.describe "integration of the whole shebang" do
     # new:
     expect(@terminal).to receive(:gets).and_return("3").ordered
     expect(@terminal).to receive(:puts).with("How many Saurian Brandys?").ordered
-    expect(@terminal).to receive(:gets).and_return("5")
+    expect(@terminal).to receive(:gets).and_return("5").ordered
     expect(@terminal).to receive(:puts).at_least(:once)
+    allow(@terminal).to receive(:gets).and_return("1")
     order = CustomerOrder.new()
     @controller.start_order(order)
   end
@@ -88,6 +89,48 @@ RSpec.describe "integration of the whole shebang" do
     expect(@terminal).to receive(:puts).with("Please select:").ordered
     expect(@terminal).to receive(:puts).with("[1] place order").ordered
     expect(@terminal).to receive(:puts).with("[2] add another item").ordered
+    allow(@terminal).to receive(:gets).and_return("1")
+    order = CustomerOrder.new()
+    @controller.start_order(order)
+  end
+  it "takes user back to choose menu when they select that option" do
+    # The calls from previous tests:
+    expect(@terminal).to receive(:puts).exactly(5).times.ordered
+    expect(@terminal).to receive(:gets).and_return("1").ordered
+    expect(@terminal).to receive(:puts).exactly(4).times.ordered
+    expect(@terminal).to receive(:gets).and_return("3").ordered
+    expect(@terminal).to receive(:puts).with("How many Saurian Brandys?").ordered
+    expect(@terminal).to receive(:gets).and_return("5").ordered
+    expect(@terminal).to receive(:puts).exactly(6).times.ordered
+    # new:
+    expect(@terminal).to receive(:gets).and_return("2").ordered
+    expect(@terminal).to receive(:puts).with("Choose a menu (1-4)").ordered
+    expect(@terminal).to receive(:puts).with("[1] Drinks").ordered
+    expect(@terminal).to receive(:puts).with("[2] Starters").ordered
+    expect(@terminal).to receive(:puts).with("[3] Main Meals").ordered
+    expect(@terminal).to receive(:puts).with("[4] Desserts").ordered
+    allow(@terminal).to receive(:gets).and_return("1")
+    expect(@terminal).to receive(:puts).at_least(:once)
+    order = CustomerOrder.new()
+    @controller.start_order(order)
+  end
+  it "completes the order when they select that option" do
+    # The calls from previous tests:
+    expect(@terminal).to receive(:puts).exactly(5).times.ordered
+    expect(@terminal).to receive(:gets).and_return("1").ordered
+    expect(@terminal).to receive(:puts).exactly(4).times.ordered
+    expect(@terminal).to receive(:gets).and_return("3").ordered
+    expect(@terminal).to receive(:puts).with("How many Saurian Brandys?").ordered
+    expect(@terminal).to receive(:gets).and_return("5").ordered
+    expect(@terminal).to receive(:puts).exactly(6).times.ordered
+    # new:
+    expect(@terminal).to receive(:gets).and_return("1").ordered
+    # expect(@terminal).to receive(:puts).with("Choose a menu (1-4)").ordered
+    # expect(@terminal).to receive(:puts).with("[1] Drinks").ordered
+    # expect(@terminal).to receive(:puts).with("[2] Starters").ordered
+    # expect(@terminal).to receive(:puts).with("[3] Main Meals").ordered
+    # expect(@terminal).to receive(:puts).with("[4] Desserts").ordered
+    # allow(@terminal).to receive(:gets).and_return("1")
     # expect(@terminal).to receive(:puts).at_least(:once)
     order = CustomerOrder.new()
     @controller.start_order(order)

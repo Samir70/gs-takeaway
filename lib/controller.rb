@@ -37,7 +37,10 @@ class Controller
     if quantity
         @customer_order.add_items(item, quantity)
         @interface.show_order(@customer_order)
-        @interface.get_next_step
+        next_step = @interface.get_next_step
+        if next_step == 2
+          ask_user_to_pick_menu
+        end
     end
   end
 end
