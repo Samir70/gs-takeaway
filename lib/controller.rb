@@ -35,7 +35,7 @@ class Controller
   def ask_user_how_many(item)
     quantity = @interface.get_quantity(item)
     if quantity
-        @customer_order.add_items(quantity, item)
+        @customer_order.add_items(item, quantity)
         @interface.show_order(@customer_order)
         @interface.get_next_step
     end
